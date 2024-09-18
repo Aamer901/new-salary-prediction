@@ -5,29 +5,38 @@ from sklearn.preprocessing import StandardScaler
 import base64
 
 # Load the model and scaler
-with open('model.pkl', 'rb') as model_file:
-    model = pickle.load(model_file)
+try:
+    with open('model.pkl', 'rb') as model_file:
+        model = pickle.load(model_file)
+except FileNotFoundError:
+    st.error("Model file not found. Please check the path and try again.")
 
-with open('scaler.pkl', 'rb') as scaler_file:
-    scaler = pickle.load(scaler_file)
+try:
+    with open('scaler.pkl', 'rb') as scaler_file:
+        scaler = pickle.load(scaler_file)
+except FileNotFoundError:
+    st.error("Scaler file not found. Please check the path and try again.")
 
 # Function to set background image
 def add_bg_from_local(image_file):
-    with open(image_file, "rb") as image:
-        encoded_string = base64.b64encode(image.read()).decode()
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background-image: url("data:image/png;base64,{encoded_string}");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+    try:
+        with open(image_file, "rb") as image:
+            encoded_string = base64.b64encode(image.read()).decode()
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background-image: url("data:image/png;base64,{encoded_string}");
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+    except FileNotFoundError:
+        st.error("Background image file not found. Please check the path and try again.")
 
 # Function to set custom styles
 def set_custom_styles():
@@ -69,7 +78,7 @@ def set_custom_styles():
     )
 
 # Set background image and custom styles
-add_bg_from_local('background.avif')  # Add your background image path
+add_bg_from_local('background.avif')  # Add your background image path here
 set_custom_styles()
 
 # Title of the app inside the title box
