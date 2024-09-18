@@ -69,7 +69,7 @@ def set_custom_styles():
     )
 
 # Set background image and custom styles
-add_bg_from_local('C:\\Users\\Lenovo\\Project of Python\\background.avif')  # Add your background image path
+add_bg_from_local('background.avif')  # Add your background image path
 set_custom_styles()
 
 # Title of the app inside the title box
